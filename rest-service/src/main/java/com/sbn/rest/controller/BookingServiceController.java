@@ -20,9 +20,13 @@ import org.springframework.web.util.UriComponentsBuilder;
 import com.sbn.rest.dto.AmpsRequestForm;
 import com.sbn.rest.service.BookingService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RefreshScope
 @RequestMapping("/api/amps")
+@Api("Set of endpoints for Creating, Retrieving, Updating and Deleting of Persons.")
 public class BookingServiceController {
 	
 	private static Logger log = LoggerFactory.getLogger(BookingServiceController.class);
@@ -32,6 +36,7 @@ public class BookingServiceController {
 	
 
 	@PostMapping("/autorisation")
+    @ApiOperation("Create an Autorisation Request")
 	public ResponseEntity<Void> requestAutorisation(@RequestBody AmpsRequestForm request, UriComponentsBuilder builder) {
 		log.info("Calling autorisation ["+request+"]");
 
@@ -53,6 +58,7 @@ public class BookingServiceController {
 	}
 	
 	@GetMapping("/request/{id}")
+    @ApiOperation("Returns a specific amps request by their identifier. 404 if does not exist.")
 	public  ResponseEntity<AmpsRequestForm> getRequest(@PathVariable Long id) {
 		
 		return new ResponseEntity<AmpsRequestForm>(bookingService.getRequest(id), HttpStatus.OK);
